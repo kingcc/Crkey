@@ -21,16 +21,16 @@ class Crkey {
 
       if (exists) {
 
-        fs.readFile(target, function(e, data) {
+        fs.readFile(target, 'utf-8',function(e, data) {
 
           if (e) throw err;
           var encry = '';
           var cipher = crypto.createCipher(mode, password);
 
-          encry += cipher.update(data, 'binary', 'binary');
+          encry += cipher.update(data, 'utf-8', 'binary');
           encry += cipher.final('binary');
 
-          fs.writeFile(target, encry, 'binary', function(err) {
+          fs.writeFile(target, encry, 'utf-8', function(err) {
             if (err) throw err;
             log(encry);
           });
@@ -51,15 +51,15 @@ class Crkey {
 
       if (exists) {
 
-        fs.readFile(target, 'binary', function(e, data) {
+        fs.readFile(target, 'utf-8', function(e, data) {
 
           if (e) throw err;
           var decry = '';
           var decipher = crypto.createDecipher(mode, password);
-          decry += decipher.update(data, 'binary', 'binary');
+          decry += decipher.update(data, 'binary', 'utf-8');
 
           try {
-            decry += decipher.final('binary');
+            decry += decipher.final('utf-8');
           } catch (e) {
             log(DECRERR);
             return;
@@ -67,14 +67,16 @@ class Crkey {
 
           if (toFile) {
 
-            fs.writeFile(target, decry.toString('utf-8'), function(err) {
+            fs.writeFile(target, decry, 'utf-8', function(err) {
 
               if (err) throw err;
-              log(decry.toString('utf-8'));
+              log(decry);
 
             });
           } else {
-            log(decry.toString('utf-8'));
+
+            log(decry);
+            return decry;
           }
 
         });
