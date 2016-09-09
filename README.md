@@ -11,7 +11,7 @@ npm install crkey -g
 ```js
 const crkey = require('crkey');
 
-crkey.crypto( target, password, mode);
-crkey.decrypto( target, password, mode, ChangeFile);
+crkey.crypto(target, password, mode, func);
+crkey.decrypto(target, password, mode, toFile ,func);
 
 ```
